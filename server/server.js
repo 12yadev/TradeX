@@ -21,13 +21,14 @@ const origins = (process.env.CLIENT_URL || 'http://localhost:5173').split(',').m
 app.use(cors({ origin: origins }));
 app.use(express.json({ limit: '100kb' }));
 
-app.use('/api', routes);
-app.use(notFound);
-app.use(errorHandler);
 
+app.use('/api', routes);
 app.get("/", (req, res) => {
   res.send("TradeX Backend is running");
 });
+app.use(notFound);
+app.use(errorHandler);
+
 
 connectDB().then(() => {
   app.listen(PORT, () => console.log(`TradeX server running on http://localhost:${PORT}`));
